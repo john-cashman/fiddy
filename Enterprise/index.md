@@ -1,6 +1,6 @@
 # FiftyOne Enterprise
 
-```
+
 <table id="social-links-table">
   <th>
     <a target="_blank" href="https://voxel51.com/enterprise">
@@ -21,7 +21,7 @@
     </a>
   </th>
 </table>
-```
+
 
 [FiftyOne Enterprise](https://voxel51.com/enterprise/) enables multiple users\
 to securely collaborate on the same datasets and models, either on-premises or\
