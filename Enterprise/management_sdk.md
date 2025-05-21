@@ -1,81 +1,89 @@
-.. _enterprise-management-sdk:
-
 # Enterprise Management SDK
-.. default-role:: code
 
-One of FiftyOne's core design principles is that you should be able to do
-everything *programmatically* if you want.
+One of FiftyOne's core design principles is that you should be able to do\
+everything _programmatically_ if you want.
 
-To this end, the `fiftyone.management` module provides Enterprise-specific methods
-for managing users, invitations, dataset permissions, plugins, API keys, and
+To this end, the `fiftyone.management` module provides Enterprise-specific methods\
+for managing users, invitations, dataset permissions, plugins, API keys, and\
 more.
 
 {% hint style="info" %}
-You must use an [API connection](enterprise-api-connection) (not a direct
+You must use an [API connection](enterprise-api-connection/) (not a direct
 {% endhint %}
-   MongoDB connection) in order to use Management SDK methods.
 
-.. _enterprise-sdk-api-reference:
+MongoDB connection) in order to use Management SDK methods.
 
-### API reference
-.. _enterprise-sdk-connections:
+.. \_enterprise-sdk-api-reference:
 
-## Connections
-.. automodule:: fiftyone.management.connection
-   :members: test_api_connection, reload_connection
+#### API reference
 
-.. _enterprise-sdk-api-keys:
+.. \_enterprise-sdk-connections:
 
-## API keys
-.. automodule:: fiftyone.management.api_key
-   :members:
-   :undoc-members:
+### Connections
 
-.. _enterprise-sdk-cloud-credentials:
+.. automodule:: fiftyone.management.connection\
+:members: test\_api\_connection, reload\_connection
 
-## Cloud credentials
-.. automodule:: fiftyone.management.cloud_credentials
-   :members:
-   :undoc-members:
+.. \_enterprise-sdk-api-keys:
 
-.. _enterprise-sdk-dataset-permissions:
+### API keys
 
-## Dataset permissions
-.. automodule:: fiftyone.management.dataset
-   :members:
-   :undoc-members:
+.. automodule:: fiftyone.management.api\_key\
+:members:\
+:undoc-members:
 
-.. _enterprise-sdk-organization-settings:
+.. \_enterprise-sdk-cloud-credentials:
 
-## Organization settings
-.. automodule:: fiftyone.management.organization
-   :members:
-   :undoc-members:
+### Cloud credentials
 
-.. _enterprise-sdk-plugin-management:
+.. automodule:: fiftyone.management.cloud\_credentials\
+:members:\
+:undoc-members:
 
-## Plugin management
-.. automodule:: fiftyone.management.plugin
-   :members:
-   :undoc-members:
+.. \_enterprise-sdk-dataset-permissions:
 
-.. _enterprise-sdk-snapshots:
+### Dataset permissions
 
-## Snapshots
-.. automodule:: fiftyone.management.snapshot
-   :members:
-   :undoc-members:
+.. automodule:: fiftyone.management.dataset\
+:members:\
+:undoc-members:
 
-.. _enterprise-sdk-user-management:
+.. \_enterprise-sdk-organization-settings:
 
-## User management
-.. automodule:: fiftyone.management.users
-   :members:
-   :undoc-members:
+### Organization settings
 
-.. _enterprise-sdk-group-management:
+.. automodule:: fiftyone.management.organization\
+:members:\
+:undoc-members:
 
-## Group management
-.. automodule:: fiftyone.management.user_groups
-   :members:
-   :undoc-members:
+.. \_enterprise-sdk-plugin-management:
+
+### Plugin management
+
+.. automodule:: fiftyone.management.plugin\
+:members:\
+:undoc-members:
+
+.. \_enterprise-sdk-snapshots:
+
+### Snapshots
+
+.. automodule:: fiftyone.management.snapshot\
+:members:\
+:undoc-members:
+
+.. \_enterprise-sdk-user-management:
+
+### User management
+
+.. automodule:: fiftyone.management.users\
+:members:\
+:undoc-members:
+
+.. \_enterprise-sdk-group-management:
+
+### Group management
+
+.. automodule:: fiftyone.management.user\_groups\
+:members:\
+:undoc-members:

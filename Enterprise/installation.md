@@ -1,41 +1,43 @@
-.. _enterprise-installation:
+# Enterprise Installation
 
-# FiftyOne Enterprise Installation
-.. default-role:: code
-
-FiftyOne Enterprise deployments come with a centralized FiftyOne Enterprise App and
-database that allows your entire team to collaborate securely on the same
-datasets. FiftyOne Enterprise is deployed entirely into your environment, either
+FiftyOne Enterprise deployments come with a centralized FiftyOne Enterprise App and\
+database that allows your entire team to collaborate securely on the same\
+datasets. FiftyOne Enterprise is deployed entirely into your environment, either\
 on-premises or in a private cloud. Your data never leaves your environment.
 
-FiftyOne Enterprise can be deployed on a wide variety of infrastructure solutions,
+FiftyOne Enterprise can be deployed on a wide variety of infrastructure solutions,\
 including Kubernetes and Docker.
 
 {% hint style="info" %}
 Detailed instructions for the initial FiftyOne Enterprise deployment, along with
 {% endhint %}
-    all necessary components, are made available by your Voxel51 CS engineer
-    during the onboarding process.
 
-.. _enterprise-python-sdk:
+```
+all necessary components, are made available by your Voxel51 CS engineer
+during the onboarding process.
+```
 
-## Python SDK
-While the [FiftyOne Enterprise App](enterprise-app) allows for countless new
-App-centric workflows, any existing Python-based workflows that you've fallen
-in love with in the open-source version of FiftyOne are still directly
+.. \_enterprise-python-sdk:
+
+### Python SDK
+
+While the [FiftyOne Enterprise App](enterprise-app/) allows for countless new\
+App-centric workflows, any existing Python-based workflows that you've fallen\
+in love with in the open-source version of FiftyOne are still directly\
 applicable!
 
-FiftyOne Enterprise requires an updated Python SDK, which is a wrapper around the
-open-source FiftyOne package that adds new functionality like support for
+FiftyOne Enterprise requires an updated Python SDK, which is a wrapper around the\
+open-source FiftyOne package that adds new functionality like support for\
 cloud-backed media.
 
-You can find the installation instructions under the "Install FiftyOne" section
+You can find the installation instructions under the "Install FiftyOne" section\
 of the Enterprise App by clicking on your user icon in the upper right corner:
 
-<figure><img src="/images/enterprise/install_fiftyone.png" alt="install-enterprise"><figcaption></figcaption></figure>
-   :width: 300
+<figure><img src="../images/enterprise/install_fiftyone.png" alt="install-enterprise"><figcaption></figcaption></figure>
 
-There you'll see instructions for installing a ``fiftyone`` package from the
+:width: 300
+
+There you'll see instructions for installing a `fiftyone` package from the\
 private PyPI server as shown below:
 
 ```shell
@@ -45,40 +47,44 @@ pip install --index-url https://${TOKEN}@pypi.fiftyone.ai fiftyone
 {% hint style="info" %}
 See :ref:`Installation with Poetry<enterprise-installation-poetry>` if you use
 {% endhint %}
-    ``poetry`` instead of ``pip``.
+
+```
+``poetry`` instead of ``pip``.
+```
 
 {% hint style="info" %}
-The Enterprise Python package is named ``fiftyone`` and has the same module
+The Enterprise Python package is named `fiftyone` and has the same module
 {% endhint %}
-   structure as [fiftyone](../api/fiftyone), so any existing scripts you
-   built using open source will continue to run after you upgrade!
 
-### Next Steps
-After installing the Enterprise Python SDK in your virtual environment, you'll need
+structure as [fiftyone](../api/fiftyone/), so any existing scripts you\
+built using open source will continue to run after you upgrade!
+
+#### Next Steps
+
+After installing the Enterprise Python SDK in your virtual environment, you'll need\
 to configure two things:
 
-*   Your team's [API connection](enterprise-api-connection) or
-    [MongoDB connection](configuring-mongodb-connection)
+* Your team's [API connection](enterprise-api-connection/) or[MongoDB connection](configuring-mongodb-connection/)
+* The [cloud credentials](enterprise-cloud-credentials/) to access your\
+  cloud-backed media
 
-*   The [cloud credentials](enterprise-cloud-credentials) to access your
-    cloud-backed media
-
-That's it! Any operations you perform will be stored in a centralized location
-and will be available to all users with access to the same datasets in the
+That's it! Any operations you perform will be stored in a centralized location\
+and will be available to all users with access to the same datasets in the\
 Enterprise App or their Python workflows.
 
-.. _enterprise-installation-poetry:
+.. \_enterprise-installation-poetry:
 
-### Installation with Poetry
-If you  are using [poetry](https://python-poetry.org/) to install your
-dependencies rather than ``pip``, you will need to follow instructions in
-[the docs for installing from a private repository.](https://python-poetry.org/docs/repositories/#installing-from-private-package-sources)
-The two key points are specifying the additional private source and declaring
-that the ``fiftyone`` module should be found there and not the default PyPI
+#### Installation with Poetry
+
+If you are using [poetry](https://python-poetry.org/) to install your\
+dependencies rather than `pip`, you will need to follow instructions in[the docs for installing from a private repository.](https://python-poetry.org/docs/repositories/#installing-from-private-package-sources)\
+The two key points are specifying the additional private source and declaring\
+that the `fiftyone` module should be found there and not the default PyPI\
 location.
 
 Add source
-~~~~~~~~~~
+
+````
 
 In poetry v1.5, it is recommended to use an
 [explicit package source.](https://python-poetry.org/docs/repositories/#explicit-package-sources)
@@ -95,7 +101,7 @@ poetry source add --secondary fiftyone-enterprise https://pypi.fiftyone.ai/simpl
 ```
 
 Configure credentials
-~~~~~~~~~~~~~~~~~~~~~
+````
 
 ```shell
 poetry config http-basic.fiftyone-enterprise ${TOKEN} ""
@@ -106,13 +112,16 @@ Alternatively, you can specify the credentials in environment variables.
 ```shell
 export POETRY_HTTP_BASIC_FIFTYONE_ENTERPRISE_USERNAME="${TOKEN}"
 ```
-    export POETRY_HTTP_BASIC_FIFTYONE_ENTERPRISE_PASSWORD=""
 
-If you have trouble configuring the credentials, see
-[more in the poetry docs here.](https://python-poetry.org/docs/repositories/#configuring-credentials)
+```
+export POETRY_HTTP_BASIC_FIFTYONE_ENTERPRISE_PASSWORD=""
+```
+
+If you have trouble configuring the credentials, see[more in the poetry docs here.](https://python-poetry.org/docs/repositories/#configuring-credentials)
 
 Add fiftyone dependency
-~~~~~~~~~~~~~~~~~~~~~~~
+
+````
 
 Replace ``X.Y.Z`` with the proper version
 
@@ -120,9 +129,12 @@ Replace ``X.Y.Z`` with the proper version
 
     poetry add --source fiftyone-enterprise fiftyone==X.Y.Z
 
-{% hint style="info" %}
+<div data-gb-custom-block data-tag="hint" data-style='info'>
+
 Due to an [unresolved misalignment](https://github.com/python-poetry/poetry/issues/4046)
-{% endhint %}
+
+</div>
+
     with ``poetry`` and a FiftyOne dependency, ``kaleido``, you must add it
     to your own dependencies as well:
 
@@ -220,9 +232,12 @@ In the above, the config file should use
 and the shared credentials file should use
 [this syntax](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html#shared-credentials-file).
 
-{% hint style="info" %}
+<div data-gb-custom-block data-tag="hint" data-style='info'>
+
 FiftyOne Enterprise requires either the `s3:ListBucket` or
-{% endhint %}
+
+</div>
+
     `s3:GetBucketLocation` permission in order to access objects in S3 buckets.
 
     If you wish to use multi-account credentials, your credentials must have
@@ -414,9 +429,12 @@ filepath = "${alias}://container/path/to/object.ext"
     # For example
     filepath = "az://test-container/image.jpg"
 
-{% hint style="info" %}
+<div data-gb-custom-block data-tag="hint" data-style='info'>
+
 If you use a
-{% endhint %}
+
+</div>
+
     [custom Azure domain](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-custom-domain-name?tabs=azure-portal),
     you can provide it by setting the
     `AZURE_STORAGE_ACCOUNT_URL` environment variable or by including the
@@ -539,9 +557,12 @@ Credentials configured via this page are stored (encrypted) in the Enterprise
 database, rather than needing to be configured through environment variables in
 your Enterprise deployment.
 
-{% hint style="info" %}
+<div data-gb-custom-block data-tag="hint" data-style='info'>
+
 Any credentials configured via environment variables in your deployment
-{% endhint %}
+
+</div>
+
     will not be displayed in this page.
 
 To upload a new credential, click the ``Add credential`` button:
@@ -566,9 +587,12 @@ to a specific list of bucket(s):
     that will be used whenever trying to read/write any media for the provider
     that does not belong to a bucket with bucket-specific credentials
 
-{% hint style="info" %}
+<div data-gb-custom-block data-tag="hint" data-style='info'>
+
 Bucket-specific credentials are useful in situations where you cannot or
-{% endhint %}
+
+</div>
+
     do not wish to provide a single set of credentials to cover all buckets
     that your team plans to use within a given cloud storage provider.
 
@@ -585,14 +609,20 @@ Any cloud credentials uploaded via this method will automatically be used by
 the Enterprise UI when any user attempts to load media associated with the
 appropriate provider or specific bucket.
 
-{% hint style="info" %}
+<div data-gb-custom-block data-tag="hint" data-style='info'>
+
 By default, Enterprise servers refresh their credentials every 120 seconds, so
-{% endhint %}
+
+</div>
+
     you may need to wait up to two minutes after modifying your credentials via
     this page in order for the changes to take effect.
 
-{% hint style="info" %}
+<div data-gb-custom-block data-tag="hint" data-style='info'>
+
 Users cannot access stored credentials directly, either via the Enterprise UI or
-{% endhint %}
+
+</div>
     by using the Enterprise SDK locally. The credentials are only decrypted and
     used internally by the Enterprise servers.
+````

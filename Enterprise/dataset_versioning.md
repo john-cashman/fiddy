@@ -1,169 +1,181 @@
-.. _dataset_versioning:
-
 # Dataset Versioning
-.. default-role:: code
 
 FiftyOne Enterprise provides native support for versioning your datasets!
 
-Dataset Versioning allows you to capture the state of your dataset in time so
-that it can be referenced in the future. This enables workflows like recalling
-particular important events in the dataset's lifecycle (model trained,
+Dataset Versioning allows you to capture the state of your dataset in time so\
+that it can be referenced in the future. This enables workflows like recalling\
+particular important events in the dataset's lifecycle (model trained,\
 annotation added, etc) as well as helping to prevent accidental data loss.
 
-  
-    <iframe id="youtube" src="https://www.youtube.com/embed/DKUkiDQVDqA?rel=0" frameborder="0" allowfullscreen>
-    </iframe>
-  
+```
+<iframe id="youtube" src="https://www.youtube.com/embed/DKUkiDQVDqA?rel=0" frameborder="0" allowfullscreen>
+</iframe>
+```
 
-.. _dataset-versioning-overview:
+.. \_dataset-versioning-overview:
 
-### Overview
-Dataset Versioning in FiftyOne Enterprise is implemented as a linear sequence of
-read-only [Snapshots](dataset-versioning-snapshots). In other words,
-creating a new Snapshot creates a permanent record of the dataset’s contents
-that can be loaded and viewed at any time in the future, but not directly
-edited. Conversely, the current version of a dataset is called its HEAD
-(think git). If you have not explicitly loaded a Snapshot, you are viewing its
-HEAD, and you can make additions, updates, and deletions to the dataset’s
+#### Overview
+
+Dataset Versioning in FiftyOne Enterprise is implemented as a linear sequence of\
+read-only [Snapshots](dataset-versioning-snapshots/). In other words,\
+creating a new Snapshot creates a permanent record of the dataset’s contents\
+that can be loaded and viewed at any time in the future, but not directly\
+edited. Conversely, the current version of a dataset is called its HEAD\
+(think git). If you have not explicitly loaded a Snapshot, you are viewing its\
+HEAD, and you can make additions, updates, and deletions to the dataset’s\
 contents as you normally would (provided you have sufficient permissions).
 
-Snapshots record all aspects of your data stored within FiftyOne, including
-dataset-level information, schema, samples, frames, brain runs, and
-evaluations. However, Snapshots exclude any information stored in external
-services, such as media stored in cloud buckets or embeddings stored in an
-external vector database, which are assumed to be immutable. If you need to
-update the image for a sample in a dataset, for example, update the sample’s
-filepath—-which is tracked by snapshots—-rather than updating the media in
-cloud storage in-place—-which would not be tracked by snapshots. This design
+Snapshots record all aspects of your data stored within FiftyOne, including\
+dataset-level information, schema, samples, frames, brain runs, and\
+evaluations. However, Snapshots exclude any information stored in external\
+services, such as media stored in cloud buckets or embeddings stored in an\
+external vector database, which are assumed to be immutable. If you need to\
+update the image for a sample in a dataset, for example, update the sample’s\
+filepath—-which is tracked by snapshots—-rather than updating the media in\
+cloud storage in-place—-which would not be tracked by snapshots. This design\
 allows dataset snapshots to be as lightweight and versatile as possible.
 
 .. tabs::
 
-  .. group-tab:: Tracked by versioning
+.. group-tab:: Tracked by versioning
 
-    +------------------------+-----------------------------------------+
-    | Dataset-level metadata | Schema, tags, and other metadata        |
-    |                        +-----------------------------------------+
-    |                        | Saved views                             |
-    |                        +-----------------------------------------+
-    |                        | Runs and run results                    |
-    +------------------------+-----------------------------------------+
-    | Sample-level metadata  | All sample metadata (including tags,    |
-    |                        | labels, detections, segmentations,      |
-    |                        | custom fields, etc.)                    |
-    |                        +-----------------------------------------+
-    |                        | All video frame metadata                |
-    +------------------------+-----------------------------------------+
+```
++------------------------+-----------------------------------------+
+| Dataset-level metadata | Schema, tags, and other metadata        |
+|                        +-----------------------------------------+
+|                        | Saved views                             |
+|                        +-----------------------------------------+
+|                        | Runs and run results                    |
++------------------------+-----------------------------------------+
+| Sample-level metadata  | All sample metadata (including tags,    |
+|                        | labels, detections, segmentations,      |
+|                        | custom fields, etc.)                    |
+|                        +-----------------------------------------+
+|                        | All video frame metadata                |
++------------------------+-----------------------------------------+
+```
 
-  .. group-tab:: Not tracked by versioning
+.. group-tab:: Not tracked by versioning
 
-    +------------------------+---------------------------------------------+
-    | Media                  | Images, videos, point clouds                |
-    |                        +---------------------------------------------+
-    |                        | Segmentations or heatmaps stored on         |
-    |                        | disk or in the cloud                        |
-    +------------------------+---------------------------------------------+
-    | External information   | Run results stored in external systems      |
-    |                        | e.g., embeddings stored in a                |
-    |                        | [vector database](qdrant-integration) |
-    +------------------------+---------------------------------------------+
+```
++------------------------+---------------------------------------------+
+| Media                  | Images, videos, point clouds                |
+|                        +---------------------------------------------+
+|                        | Segmentations or heatmaps stored on         |
+|                        | disk or in the cloud                        |
++------------------------+---------------------------------------------+
+| External information   | Run results stored in external systems      |
+|                        | e.g., embeddings stored in a                |
+|                        | [vector database](qdrant-integration) |
++------------------------+---------------------------------------------+
+```
 
-Dataset Versioning has been built with an extensible architecture so that
-different versioning backends can be swapped in. Each backend may have
-different tradeoffs in terms of performance, storage, and deployment needs, so
-users should be able to choose the best fit for their needs. In addition, many
-users may already have a versioning solution external to FiftyOne Enterprise, and
+Dataset Versioning has been built with an extensible architecture so that\
+different versioning backends can be swapped in. Each backend may have\
+different tradeoffs in terms of performance, storage, and deployment needs, so\
+users should be able to choose the best fit for their needs. In addition, many\
+users may already have a versioning solution external to FiftyOne Enterprise, and\
 the goal is to support integration around those use cases as well.
 
-Currently, only the
-[internal duplication backend](internal-duplication-backend) is
-available, but further improvements and implementing additional backend choices
-are [on the roadmap](dataset-versioning-roadmap).
+Currently, only the[internal duplication backend](internal-duplication-backend/) is\
+available, but further improvements and implementing additional backend choices\
+are [on the roadmap](dataset-versioning-roadmap/).
 
 .. warning::
 
-    Dataset Versioning is not a replacement for database backups. We strongly
-    encourage the use of regular data backups and good storage maintenance
-    processes.
+```
+Dataset Versioning is not a replacement for database backups. We strongly
+encourage the use of regular data backups and good storage maintenance
+processes.
+```
 
-.. _dataset-versioning-snapshots:
+.. \_dataset-versioning-snapshots:
 
-### Snapshots
-Dataset Versioning in FiftyOne Enterprise is implemented as a linear history of
-**Snapshots**. A Snapshot captures the state of a dataset at a particular point
-in time as an immutable object. Compare this concept to creating commits and
-tags in a single branch of a version control system such as git or svn; a
-Snapshot is a commit and tag (including readable name, description, creator)
+#### Snapshots
+
+Dataset Versioning in FiftyOne Enterprise is implemented as a linear history of**Snapshots**. A Snapshot captures the state of a dataset at a particular point\
+in time as an immutable object. Compare this concept to creating commits and\
+tags in a single branch of a version control system such as git or svn; a\
+Snapshot is a commit and tag (including readable name, description, creator)\
 all in one.
 
-The current working version of the dataset (called the **HEAD**) can be edited
-by anyone with appropriate permissions, as normal. Since Snapshots include a
+The current working version of the dataset (called the **HEAD**) can be edited\
+by anyone with appropriate permissions, as normal. Since Snapshots include a\
 commit-like operation, they can only be created on the dataset HEAD.
 
-## Snapshot states
-Snapshots can be in a few different states of existence depending on deployment
+### Snapshot states
+
+Snapshots can be in a few different states of existence depending on deployment\
 choices and user actions.
 
 .. glossary::
 
-    Materialized Snapshot
-        A Snapshot whose state and contents are entirely *materialized* in
-        the MongoDB database. The Snapshot is "ready to go" and be loaded
-        instantly for analysis and visualization.
+```
+Materialized Snapshot
+    A Snapshot whose state and contents are entirely *materialized* in
+    the MongoDB database. The Snapshot is "ready to go" and be loaded
+    instantly for analysis and visualization.
 
-    Archived Snapshot
-        A materialized Snapshot that has been archived to cold storage to
-        free up working space in the MongoDB instance. The Snapshot cannot be
-        loaded by users until it is re-materialized into MongoDB. Since it is
-        stored in its materialized form already though, an archived Snapshot
-        can be re-materialized easily, at merely the cost of network transfer
-        and MongoDB write latencies. See [here](dataset-versioning-snapshot-archival)
-        for more.
+Archived Snapshot
+    A materialized Snapshot that has been archived to cold storage to
+    free up working space in the MongoDB instance. The Snapshot cannot be
+    loaded by users until it is re-materialized into MongoDB. Since it is
+    stored in its materialized form already though, an archived Snapshot
+    can be re-materialized easily, at merely the cost of network transfer
+    and MongoDB write latencies. See [here](dataset-versioning-snapshot-archival)
+    for more.
 
-    Virtual Snapshot
-        A Snapshot whose state and contents are stored by the pluggable backend
-        versioning implementation in whatever way it chooses. In order to be
-        loaded by FiftyOne Enterprise users, the Snapshot must be *materialized*
-        into its workable form in MongoDB. This is done through a combination
-        of the overarching versioning infrastructure and the specific
-        versioning backend.
+Virtual Snapshot
+    A Snapshot whose state and contents are stored by the pluggable backend
+    versioning implementation in whatever way it chooses. In order to be
+    loaded by FiftyOne Enterprise users, the Snapshot must be *materialized*
+    into its workable form in MongoDB. This is done through a combination
+    of the overarching versioning infrastructure and the specific
+    versioning backend.
+```
 
-For a given Snapshot, the virtual form always exists. It may also be
-materialized, archived, or both (in the case that an archived Snapshot has
+For a given Snapshot, the virtual form always exists. It may also be\
+materialized, archived, or both (in the case that an archived Snapshot has\
 been re-materialized but kept in cold storage also).
 
 {% hint style="info" %}
-With the [internal duplication backend](internal-duplication-backend)
+With the [internal duplication backend](internal-duplication-backend/)
 {% endhint %}
-    there is no distinction between materialized and virtual Snapshots since by
-    definition the implementation uses materialized Snapshots as its method of
-    storage.
 
-.. _dataset-versioning-snapshot-archival:
+```
+there is no distinction between materialized and virtual Snapshots since by
+definition the implementation uses materialized Snapshots as its method of
+storage.
+```
 
-## Snapshot archival
+.. \_dataset-versioning-snapshot-archival:
+
+### Snapshot archival
+
 Snapshot your datasets easier knowing your database won't be overrun!
 
-If your snapshots are important for historical significance but aren't used
-very often, then you can consider archiving snapshots. This is especially
-helpful with the
-[internal duplication backend](internal-duplication-backend) where
+If your snapshots are important for historical significance but aren't used\
+very often, then you can consider archiving snapshots. This is especially\
+helpful with the[internal duplication backend](internal-duplication-backend/) where\
 creating snapshots causes database storage to grow quickly!
 
-When a snapshot is archived, all of its contents are stored in an archive in
-the configured cold storage location: either a mounted filesystem or cloud
-storage folder (using your deployment's
-[cloud credentials](enterprise-cloud-credentials)).
+When a snapshot is archived, all of its contents are stored in an archive in\
+the configured cold storage location: either a mounted filesystem or cloud\
+storage folder (using your deployment's[cloud credentials](enterprise-cloud-credentials/)).
 
 {% hint style="info" %}
 Snapshots must be unarchived in order to browse them in the UI or load them
 {% endhint %}
-    with the SDK.
 
-.. _dataset-versioning-automatic-archival:
+```
+with the SDK.
+```
+
+.. \_dataset-versioning-automatic-archival:
 
 Automatic archival
-~~~~~~~~~~~~~~~~~~
+
+````
 
 If snapshot archival is enabled, snapshots will automatically be archived
 to make room for newer snapshots as necessary. This can be triggered when a
@@ -177,9 +189,12 @@ that was least-recently loaded will be automatically archived.
 If the materialized snapshots per-dataset limit is exceeded, then the snapshot
 *within the dataset* that was least-recently loaded will be archived.
 
-{% hint style="info" %}
+<div data-gb-custom-block data-tag="hint" data-style='info'>
+
 Some snapshots will not be chosen for automatic archival, even if they
-{% endhint %}
+
+</div>
+
     would otherwise qualify based on their last load time: the most recent
     snapshot for each dataset, and those that have been loaded within the
     configured age requirement.
@@ -208,14 +223,20 @@ To enable browsing or loading again, the snapshot can be unarchived
 Usage notes
 ~~~~~~~~~~~
 
-{% hint style="info" %}
+<div data-gb-custom-block data-tag="hint" data-style='info'>
+
 If the most recent snapshot is archived then the latest changes in HEAD
-{% endhint %}
+
+</div>
+
     cannot be calculated and may be reported as unknown.
 
-{% hint style="info" %}
+<div data-gb-custom-block data-tag="hint" data-style='info'>
+
 If a snapshot is deleted, the change summary for the following snapshot
-{% endhint %}
+
+</div>
+
     must be recomputed against the previous snapshot. However, if either of
     these snapshots are currently archived then the change summary cannot be
     recomputed and may be reported as unknown.
@@ -374,9 +395,11 @@ The following sections describe how to create and use snapshots.
 Users with Can Manage permissions to a dataset can create Snapshots through the
 Enterprise UI or the Management SDK.
 
-{% hint style="info" %}
+<div data-gb-custom-block data-tag="hint" data-style='info'>
+
 Snapshots can only be created from the HEAD of the dataset.
-{% endhint %}
+
+</div>
 
 Enterprise UI
 ~~~~~~~~~~~~~
@@ -385,9 +408,12 @@ At the top of the History tab for a dataset is the Create snapshot panel.
 This panel shows the number of changes that have happened between the last
 Snapshot and the current state of the dataset.
 
-{% hint style="info" %}
+<div data-gb-custom-block data-tag="hint" data-style='info'>
+
 The latest changes summary is not continuously updated; click the "Refresh"
-{% endhint %}
+
+</div>
+
     button to recompute these values.
 
 <figure><img src="/images/enterprise/versioning/create-refresh-button.png" alt="create-refresh-button"><figcaption></figcaption></figure>
@@ -395,9 +421,12 @@ The latest changes summary is not continuously updated; click the "Refresh"
 To create a Snapshot, provide a unique name and an optional description, then
 click the "Save new snapshot" button.
 
-{% hint style="info" %}
+<div data-gb-custom-block data-tag="hint" data-style='info'>
+
 Depending on the [versioning backend](dataset-versioning-backends)
-{% endhint %}
+
+</div>
+
     used, deployment options chosen, and the size of the dataset, this may take
     some time.
 
@@ -551,9 +580,12 @@ Users with Can Manage permissions to a dataset can manually
 [archive snapshots](dataset-versioning-automatic-archival) to the
 configured cold storage location via the UI or the Management SDK.
 
-{% hint style="info" %}
+<div data-gb-custom-block data-tag="hint" data-style='info'>
+
 Users cannot browse archived snapshots via the UI or load them via the SDK.
-{% endhint %}
+
+</div>
+
     The snapshot must first be
     [unarchived](dataset-versioning-unarchive-snapshot).
 
@@ -670,9 +702,11 @@ clone.
 
 Additionally, change summary calculation can be slow.
 
-{% hint style="info" %}
+<div data-gb-custom-block data-tag="hint" data-style='info'>
+
 In v1.4.0, calculating number of samples modified in particular can
-{% endhint %}
+
+</div>
     cause slowdown with larger datasets. This value is not computed for
     datasets larger than 200 thousand samples.
 
@@ -787,3 +821,4 @@ versions for these additional features!
 -   Implement a branch-and-merge model
 -   Deep integrations with versioning backend tools to version FiftyOne
     datasets alongside your models and media
+````

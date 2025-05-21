@@ -1,42 +1,39 @@
-.. _enterprise-api-connection:
+# Api Connection
 
-# API Connection
-.. default-role:: code
-
-This page describes how to create API keys and configure your
-[SDK installation](enterprise-python-sdk) to connect to your Enterprise
+This page describes how to create API keys and configure your[SDK installation](enterprise-python-sdk/) to connect to your Enterprise\
 deployment's API.
 
-All actions taken via API connections are authenticated based on the user
-associated with the API key, which means that concepts like user roles and
-dataset permissions *are enforced*.
+All actions taken via API connections are authenticated based on the user\
+associated with the API key, which means that concepts like user roles and\
+dataset permissions _are enforced_.
 
 {% hint style="info" %}
 **API connections are currently in beta.** The recommended stable solution
 {% endhint %}
-   is to use your Enterprise deployment's
-   [MongoDB connection](configuring-mongodb-connection).
 
-.. _configuring-an-api-connection:
+is to use your Enterprise deployment's[MongoDB connection](configuring-mongodb-connection/).
 
-## Configuring an API connection
-You can configure an API connection by adding an API URI and API key to your
+.. \_configuring-an-api-connection:
+
+### Configuring an API connection
+
+You can configure an API connection by adding an API URI and API key to your\
 FiftyOne config as described below:
 
-+-------------------------------+---------------------------------------+-------------------------------+----------------------------------------------------------------------------------------+
-| Config field                  | Environment variable                  | Default value                 | Description                                                                            |
-+===============================+=======================================+===============================+========================================================================================+
-| `api_uri`                     | `FIFTYONE_API_URI`                    | `None`                        | The URI of your FiftyOne Enterprise API. Ask your deployment admin for this value.     |
-+-------------------------------+---------------------------------------+-------------------------------+----------------------------------------------------------------------------------------+
-| `api_key`                     | `FIFTYONE_API_KEY`                    | `None`                        | Your FiftyOne Enterprise API key. [See here](enterprise-generate-api-key) to     |
-|                               |                                       |                               | generate one.                                                                          |
-+-------------------------------+---------------------------------------+-------------------------------+----------------------------------------------------------------------------------------+
-| `api_compressor`              | `FIFTYONE_API_COMPRESSOR`             | `lz4`                         | If data being sent to the server should be compressed. Recommended when on VPN or      |
-|                               |                                       |                               | poor internet connection. Defaults to `lz4` but accepts `none`, `bz2`, `zlib` and      |
-|                               |                                       |                               | `lzma`.                                                                                |
-+-------------------------------+---------------------------------------+-------------------------------+----------------------------------------------------------------------------------------+
-| `api_transfer_method`         | `FIFTYONE_API_TRANSFER_METHOD`        | `bytes`                       | How data should be encoded and transferred to the server. Default is `bytes` but       |
-|                               |                                       |                               | accepts `str` as well which will base64 encode and convert to string before sending.   |
++-------------------------------+---------------------------------------+-------------------------------+----------------------------------------------------------------------------------------+\
+\| Config field | Environment variable | Default value | Description |\
++===============================+=======================================+===============================+========================================================================================+\
+\| `api_uri` | `FIFTYONE_API_URI` | `None` | The URI of your FiftyOne Enterprise API. Ask your deployment admin for this value. |\
++-------------------------------+---------------------------------------+-------------------------------+----------------------------------------------------------------------------------------+\
+\| `api_key` | `FIFTYONE_API_KEY` | `None` | Your FiftyOne Enterprise API key. [See here](enterprise-generate-api-key/) to |\
+\| | | | generate one. |\
++-------------------------------+---------------------------------------+-------------------------------+----------------------------------------------------------------------------------------+\
+\| `api_compressor` | `FIFTYONE_API_COMPRESSOR` | `lz4` | If data being sent to the server should be compressed. Recommended when on VPN or |\
+\| | | | poor internet connection. Defaults to `lz4` but accepts `none`, `bz2`, `zlib` and |\
+\| | | | `lzma`. |\
++-------------------------------+---------------------------------------+-------------------------------+----------------------------------------------------------------------------------------+\
+\| `api_transfer_method` | `FIFTYONE_API_TRANSFER_METHOD` | `bytes` | How data should be encoded and transferred to the server. Default is `bytes` but |\
+\| | | | accepts `str` as well which will base64 encode and convert to string before sending. |\
 +-------------------------------+---------------------------------------+-------------------------------+----------------------------------------------------------------------------------------+
 
 For example, you can set environment variables:
@@ -44,24 +41,25 @@ For example, you can set environment variables:
 ```shell
 export FIFTYONE_API_URI=XXXXXXXX
 ```
-   export FIFTYONE_API_KEY=YYYYYYYY
 
-See
-[this page](configuring-fiftyone) for more information about using your
+export FIFTYONE\_API\_KEY=YYYYYYYY
+
+See[this page](configuring-fiftyone/) for more information about using your\
 FiftyOne config.
 
-.. _enterprise-generate-api-key:
+.. \_enterprise-generate-api-key:
 
-## Generating an API key
-Users can generate and manage API keys via the UI or the
-[Management SDK](enterprise-management-sdk).
+### Generating an API key
+
+Users can generate and manage API keys via the UI or the[Management SDK](enterprise-management-sdk/).
 
 {% hint style="info" %}
 Guests cannot create or use API keys.
 {% endhint %}
 
 Generating keys via the UI
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+```
 
 You can access API key management features by clicking on your account icon in
 the upper-right of the FiftyOne Enterprise App and navigating to the
@@ -85,25 +83,26 @@ Finally, copy the key and configure it locally using one of the options
    actions as a user, so secure them as you would a password!
 
 Generating keys programmatically
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
 
-You can also use
-:meth:`generate_api_key() <fiftyone.management.api_key.generate_api_key>` to
+You can also use\
+:meth:`generate_api_key() <fiftyone.management.api_key.generate_api_key>` to\
 generate API keys programmatically.
 
 {% hint style="info" %}
 Admins can generate API keys for other users, if desired.
 {% endhint %}
 
-.. _enterprise-delete-api-key:
+.. \_enterprise-delete-api-key:
 
-## Deleting an API key
-To delete a key and remove its access, find the key to delete in the list and
+### Deleting an API key
+
+To delete a key and remove its access, find the key to delete in the list and\
 click "Delete".
 
-<figure><img src="/images/enterprise/api_key_delete.png" alt="api-key-delete"><figcaption></figcaption></figure>
+<figure><img src="../images/enterprise/api_key_delete.png" alt="api-key-delete"><figcaption></figcaption></figure>
 
-You can also programmatically delete API keys via
+You can also programmatically delete API keys via\
 :meth:`delete_api_key() <fiftyone.management.api_key.delete_api_key>`.
 
 {% hint style="info" %}
