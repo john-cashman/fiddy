@@ -1,6 +1,6 @@
 # FiftyOne
 
-```
+
 <table id="social-links-table">
   <th>
     <a target="_blank" href="https://github.com/voxel51/fiftyone">
@@ -21,7 +21,7 @@
     </a>
   </th>
 </table>
-```
+
 
 **The open-source tool for building high-quality datasets and computer vision models**
 
