@@ -1,7 +1,7 @@
 # FiftyOne
 
   
-    <table id="social-links-table">
+<table id="social-links-table">
       <th>
         <a target="_blank" href="https://github.com/voxel51/fiftyone">
           <img alt="GitHub repository" src="_static/images/icons/github-logo-256px.png">
@@ -20,7 +20,7 @@
           &nbsp Try it in Colab
         </a>
       </th>
-    </table>
+</table>
   
 
 **The open-source tool for building high-quality datasets and computer vision models**
@@ -80,12 +80,11 @@ learn how:
 [![Amazon Web Services](https://voxel51.com/images/integrations/aws-128.png)](enterprise/installation.html#amazon-s3)
 [![Azure](https://voxel51.com/images/integrations/azure-128.png)](enterprise/installation.html#microsoft-azure)
 {% hint style="info" %}
-FiftyOne is growing!
-{% endhint %}
-  [Sign up for the mailing list](https://share.hsforms.com/1zpJ60ggaQtOoVeBqIZdaaA2ykyk)
+FiftyOne is growing! [Sign up for the mailing list](https://share.hsforms.com/1zpJ60ggaQtOoVeBqIZdaaA2ykyk)
   to learn about new features as they come out.
+{% endhint %}
 
-.. _core-capabilities:
+
 
 ### Core Capabilities
 
@@ -105,7 +104,6 @@ FiftyOne is growing!
         
 
 ### Core Concepts
-.. _fiftyone-library:
 
 ## FiftyOne Library
 FiftyOne's core library provides a structured yet dynamic representation to
@@ -131,14 +129,9 @@ import fiftyone as fo
         print(sample)
 
 {% hint style="info" %}
-FiftyOne is designed to be lightweight and flexible, making it easy to load
+FiftyOne is designed to be lightweight and flexible, making it easy to load your datasets. FiftyOne supports loading datasets in a variety of common formats out-of-the-box, and it also provides the extensibility to load datasets in custom formats.
+Check out [loading datasets](user_guide/dataset_creation/index) to see how to load your data into FiftyOne.
 {% endhint %}
-    your datasets. FiftyOne supports loading datasets in a variety of common
-    formats out-of-the-box, and it also provides the extensibility to load
-    datasets in custom formats.
-
-    Check out [loading datasets](user_guide/dataset_creation/index) to see
-    how to load your data into FiftyOne.
 
 ## FiftyOne App
 The FiftyOne App is a graphical user interface that makes it easy to explore
