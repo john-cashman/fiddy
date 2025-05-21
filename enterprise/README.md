@@ -2,8 +2,8 @@
 
 
 
-| <p><a href="https://voxel51.com/enterprise"><img src="../_static/images/icons/browser-512px.png" alt=""><br>  Learn more</a></p> | <p><a href="https://voxel51.com/book-a-demo/"><img src="../_static/images/icons/zoom-512px.png" alt=""><br>  Talk to us</a></p> | <p><a href="https://try.fiftyone.ai"><img src="../_static/images/icons/statistics-512px.png" alt=""><br>  Try it now</a></p> |
-| -------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| <p><a href="https://voxel51.com/enterprise"><img src="../_static/images/icons/browser-512px.png" alt="" data-size="line"><br>  Learn more</a></p> | <p><a href="https://voxel51.com/book-a-demo/"><img src="../_static/images/icons/zoom-512px.png" alt="" data-size="line"><br>  Talk to us</a></p> | <p><a href="https://try.fiftyone.ai"><img src="../_static/images/icons/statistics-512px.png" alt="" data-size="line"><br>  Try it now</a></p> |
+| ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
 
 [FiftyOne Enterprise](https://voxel51.com/enterprise/) enables multiple users\
 to securely collaborate on the same datasets and models, either on-premises or\

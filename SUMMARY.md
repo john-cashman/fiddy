@@ -16,5 +16,3 @@
   * [Secrets](Enterprise/secrets.md)
   * [Management SDK](Enterprise/management_sdk.md)
   * [Migrations](Enterprise/migrations.md)
-* [Environments](environments/README.md)
-  * [FiftyOne](Environments/index.md)
