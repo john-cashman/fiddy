@@ -4,12 +4,10 @@ FiftyOne Enterprise is purpose-built to integrate into your existing ML workflow
 including annotation, evaluation, model training, and deployment.
 
 {% hint style="info" %}
-[Learn more](https://voxel51.com/enterprise) about FiftyOne Enterprise and
+[Learn more](https://voxel51.com/enterprise) about FiftyOne Enterprise and [contact us]\(https://voxel51.com/talk-to-sales) to try it!
 {% endhint %}
 
-\[contact us]\(https://voxel51.com/talk-to-sales) to try it!
 
-.. \_fiftyone-vs-fiftyone-enterprise:
 
 #### Open Source vs Enterprise
 
