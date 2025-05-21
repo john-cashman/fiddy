@@ -15,7 +15,7 @@ including annotation, evaluation, model training, and deployment.
 
 Here's a high-level overview of the capabilities that FiftyOne Enterprise brings:
 
-```
+
 </table><table class="docutils align-center">
 <thead>
 <tr class="row-odd"><th class="head stub"></th>
@@ -76,9 +76,9 @@ Here's a high-level overview of the capabilities that FiftyOne Enterprise brings
 </tr>
 </tbody>
 </table>
-```
 
-.. \_enterprise-backwards-compatibility:
+
+
 
 #### Backwards compatibility
 
