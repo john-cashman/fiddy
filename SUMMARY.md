@@ -1,14 +1,14 @@
 # Table of contents
 
-* [FiftyOne](README.md)
+* [Overview](README.md)
 * [Enterprise](enterprise/README.md)
+  * [FiftyOne Enterprise](Enterprise/index.md)
   * [api\_connection](Enterprise/api_connection.md)
   * [app](Enterprise/app.md)
   * [cloud\_media](Enterprise/cloud_media.md)
   * [data\_lens](Enterprise/data_lens.md)
   * [data\_quality](Enterprise/data_quality.md)
   * [dataset\_versioning](Enterprise/dataset_versioning.md)
-  * [index](Enterprise/index.md)
   * [installation](Enterprise/installation.md)
   * [management\_sdk](Enterprise/management_sdk.md)
   * [migrations](Enterprise/migrations.md)
